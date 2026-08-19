@@ -4,7 +4,7 @@ import math
 from pathlib import Path
 
 import torch
-from sklearn.model_selection import GroupShuffleSplit
+from sklearn.model_selection import GroupShuffleSplit, StratifiedGroupKFold
 from torch_geometric.loader import DataLoader
 
 from .data import load_cc200_coordinates
@@ -204,6 +204,64 @@ def create_graph_loaders(
         shuffle=False,
     )
     return train_loader, validation_loader, test_loader
+
+
+def split_locked_test_sites(graphs, test_sites):
+    """Separate immutable held-out sites from the development participants."""
+    test_sites = {str(site) for site in test_sites}
+    available_sites = {str(graph.site_id) for graph in graphs}
+    missing_sites = test_sites - available_sites
+    if missing_sites:
+        missing = ", ".join(sorted(missing_sites))
+        raise ValueError(f"Locked test sites are missing from the graphs: {missing}")
+
+    development_graphs = [
+        graph for graph in graphs if str(graph.site_id) not in test_sites
+    ]
+    locked_test_graphs = [
+        graph for graph in graphs if str(graph.site_id) in test_sites
+    ]
+    return development_graphs, locked_test_graphs
+
+
+def create_site_validation_folds(graphs, n_splits=5, seed=42):
+    """Return reproducible, diagnosis-balanced folds with sites kept intact."""
+    labels = [int(graph.y.item()) for graph in graphs]
+    groups = [str(graph.site_id) for graph in graphs]
+    if len(set(groups)) < n_splits:
+        raise ValueError(
+            f"At least {n_splits} distinct sites are required for {n_splits} folds."
+        )
+
+    splitter = StratifiedGroupKFold(
+        n_splits=n_splits,
+        shuffle=True,
+        random_state=seed,
+    )
+    folds = []
+    for train_indices, validation_indices in splitter.split(
+        graphs,
+        y=labels,
+        groups=groups,
+    ):
+        folds.append(
+            (
+                [graphs[index] for index in train_indices],
+                [graphs[index] for index in validation_indices],
+            )
+        )
+    return folds
+
+
+def create_graph_loader(graphs, batch_size=16, shuffle=False, seed=42):
+    """Create one deterministic loader for an already-defined graph split."""
+    generator = torch.Generator().manual_seed(seed) if shuffle else None
+    return DataLoader(
+        graphs,
+        batch_size=batch_size,
+        shuffle=shuffle,
+        generator=generator,
+    )
 
 
 def summarize_graphs(graphs):
