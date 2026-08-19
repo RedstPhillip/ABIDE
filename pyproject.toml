@@ -12,6 +12,7 @@ dependencies = [
     "scikit-learn",
     "torch",
     "torch-geometric",
+    "wandb>=0.28.2,<0.29",
 ]
 
 [project.scripts]
