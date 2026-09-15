@@ -1,0 +1,6 @@
+include requirements.txt
+include evaluate_ensemble.py
+recursive-include notebooks *.ipynb
+recursive-include configs *.json
+recursive-include tests *.py
+prune configs/final_bnt_calibrated/checkpoints

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "model_name": "cc200-bnt-three-seed-platt",
+  "status": "validation-selected from lazy-index development-only runs",
+  "created_at": "2026-09-04T08:15:45Z",
+  "threshold": 0.5,
+  "source_sweeps": [],
+  "development_split": {
+    "seed": 42,
+    "train_count": 609,
+    "validation_count": 131,
+    "train_participant_hash": "2b9904ff8a4bde49ed8d779a1864cd0e7f88c0b680521d9daaaf1a5ee1eab5af",
+    "validation_participant_hash": "ed62220cb29c0b9d02b5ebb1b1f1d3631c39c5b155e9ce5e9acbc0350d94088d"
+  },
+  "probability_calibration": {
+    "type": "platt_logit",
+    "input": "equal mean of the three member ASD probabilities",
+    "intercept": 0.24895218415350323,
+    "coefficient": 0.33717319642836263,
+    "clip_epsilon": 0.00001,
+    "regularization_C": 0.1,
+    "selection": "minimum five-fold log loss on 609 train-only OOF predictions",
+    "training_run": "redstphillip-htl-anichstra-e/abide-gnn/litwd957",
+    "validation_run": "redstphillip-htl-anichstra-e/abide-gnn/ipdd0xa4"
+  },
+  "checkpoints": [
+    {
+      "seed": 42,
+      "best_epoch": 7,
+      "run_id": "cw80p265",
+      "run_name": "bnt-safe-reproduction-seed-42",
+      "artifact": "redstphillip-htl-anichstra-e/abide-gnn/bnt-safe-reproduction-seed-42-model:v0",
+      "path": "checkpoints/clean-seed-42/best_model.pt",
+      "sha256": "d9fc318779c1fdee265b9ee81b5390e10db29ad9d8406cc406ecc066861bc86b"
+    },
+    {
+      "seed": 52,
+      "best_epoch": 10,
+      "run_id": "yk91r8sm",
+      "run_name": "bnt-safe-reproduction-seed-52",
+      "artifact": "redstphillip-htl-anichstra-e/abide-gnn/bnt-safe-reproduction-seed-52-model:v0",
+      "path": "checkpoints/clean-seed-52/best_model.pt",
+      "sha256": "89cea30110e9a1222ea9c1de389bed5c7ea5d874de0c835fbf6fbb81fb31c569"
+    },
+    {
+      "seed": 62,
+      "best_epoch": 8,
+      "run_id": "bggnmiya",
+      "run_name": "bnt-safe-reproduction-seed-62",
+      "artifact": "redstphillip-htl-anichstra-e/abide-gnn/bnt-safe-reproduction-seed-62-model:v0",
+      "path": "checkpoints/clean-seed-62/best_model.pt",
+      "sha256": "b9a6435f6caec5a7e2e4ef2a1f27f7b342733d6e97997f17335989e7603b63bb"
+    }
+  ],
+  "validation_metrics": {
+    "accuracy": 0.6793893129770993,
+    "balanced_accuracy": 0.684192037470726,
+    "roc_auc": 0.7484777517564403,
+    "average_precision": 0.67648689133428,
+    "f1_asd": 0.6865671641791045,
+    "sensitivity_asd": 0.7540983606557377,
+    "specificity_control": 0.6142857142857143,
+    "brier_score": 0.20431305534125083,
+    "log_loss": 0.5944041402547944,
+    "expected_calibration_error": 0.06427310812505418
+  }
+}

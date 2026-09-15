@@ -1,0 +1,35 @@
+{
+  "evaluated_at": "2026-09-04T09:09:48.659017+00:00",
+  "ensemble_size": 3,
+  "threshold": 0.5,
+  "test_participant_hash": "7972124a2377b4528fbd1744b814812a243af3abac17d2bb41dd54b75f09767f",
+  "test_summary": {
+    "graphs": 131,
+    "controls": 71,
+    "asd": 60,
+    "sites": 20
+  },
+  "metrics": {
+    "accuracy": 0.6412213740458015,
+    "balanced_accuracy": 0.6444835680751173,
+    "roc_auc": 0.7021126760563381,
+    "average_precision": 0.6650638692721691,
+    "brier_score": 0.22377880257818294,
+    "f1_asd": 0.6356589147286822,
+    "sensitivity_asd": 0.6833333333333333,
+    "specificity_control": 0.6056338028169014,
+    "confusion_matrix": [
+      [
+        43,
+        28
+      ],
+      [
+        19,
+        41
+      ]
+    ],
+    "loss": 0.6390746812355429
+  },
+  "source_revision": "545155a",
+  "ensemble_manifest": "ensemble.json"
+}

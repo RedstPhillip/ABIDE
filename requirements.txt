@@ -1,0 +1,11 @@
+jupyterlab==4.6.2
+ipykernel==7.3.0
+numpy==2.5.2
+pandas==3.0.5
+matplotlib==3.11.1
+seaborn==0.13.2
+nilearn==0.14.0
+scikit-learn==1.8.0
+torch==2.13.0
+torch-geometric==2.8.0.post1
+wandb==0.28.2

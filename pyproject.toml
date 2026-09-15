@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "abide-gnn"
+version = "0.1.0"
+description = "ABIDE CC200 brain-network classification and calibrated BNT ensemble inference."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "nilearn",
+    "numpy",
+    "pandas",
+    "scikit-learn",
+    "torch",
+    "torch-geometric",
+    "wandb>=0.28.2,<0.29",
+]
+
+[project.optional-dependencies]
+notebooks = ["jupyterlab", "ipykernel", "matplotlib", "seaborn"]
+dev = ["ruff==0.16.7", "nbformat", "matplotlib", "build"]
+
+[project.urls]
+Repository = "https://github.com/RedstPhillip/ABIDE"
+
+[project.scripts]
+abide-gnn-predict = "abide_gnn.inference:main"
+abide-gnn-train = "train:main"
+abide-gnn-evaluate-ensemble = "abide_gnn.ensemble:main"
+
+[tool.setuptools]
+packages = ["abide_gnn"]
+py-modules = [
+    "train",
+    "download_manifest_checkpoints",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+extend-exclude = ["data", "artifacts", "wandb", "build"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/*.ipynb" = ["E402"]
+
+[tool.ruff.lint.isort]
+known-third-party = ["wandb"]
